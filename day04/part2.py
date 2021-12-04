@@ -37,29 +37,21 @@ for x in range(1,len(data),6):
 
 # for each bingo call ...
 for a in range(len(bingocalls)):
+    called=bingocalls[0:a+1]
     removed=0
     # for each card ...
     for b in range(len(cards)):
         # delete cards as they match - tracking the last card removed
         # we need to track the number 'removed' during this loop because the
         # size of the list changes as we delete more cards
-        if check_card(cards[b-removed],bingocalls[0:a+1]):
+        if check_card(cards[b-removed],called):
             last_card=cards[b-removed].copy()
             del cards[b-removed]
             removed+=1
-    last_called=a
     if len(cards)==0: break
 
-# found matching card caluclate reulst and print
+# we captured last removed and called list at that time, now we calculate the result
 print("last_card",last_card)
-print("sum_unmarked=%d, lastcalled=%s" 
-        % (sum_unmarked(last_card,bingocalls[0:last_called+1]),
-           bingocalls[last_called] ))
-print("result=%d" % 
-        (sum_unmarked(last_card,bingocalls[0:last_called+1])*
-         int(bingocalls[last_called])))
-exit(0)
-        
-    
-# print(cards)
-# print(bingocalls)
+print("sum_unmarked=%d, lastcalled=%s" % (sum_unmarked(last_card,called),called[-1] ))
+print("result=%d" % (sum_unmarked(last_card,called)*int(called[-1])))
+      
