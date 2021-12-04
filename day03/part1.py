@@ -12,13 +12,13 @@ def bitcount(lines,bit):
 with open('rawdata') as inputfile:
     lines = inputfile.readlines()
 
-# calculate only gamma rate as epsilon rate is calculatable from gamma
+# calculate only gamma rate
+# epsilon rate is derived later from gamma and binlen
 gamma=0
 for a in range(0,binlen):
-    gamma*=2
-    if bitcount(lines,a) > (len(lines)/2):
-        gamma+=1
-epsilon=(((2**binlen)-1)-gamma)
+    gamma*=2   # double result every digit to convert automagically from binary to decimal
+    if bitcount(lines,a) > (len(lines)/2): gamma+=1
 
 # calculate and print result
+epsilon=(((2**binlen)-1)-gamma)
 print(gamma*epsilon)
