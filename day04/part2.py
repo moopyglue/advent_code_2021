@@ -7,10 +7,12 @@ cards      = common.load_cards(file)
 
 # for each bingo call ...
 for a in range(len(bingocalls)):
+    
     called=bingocalls[0:a+1]
     removed=0
     # for each card ...
     for b in range(len(cards)):
+
         # delete cards as they match - tracking the last one removed(last_card)
         # we need to track the number 'removed' during this loop because the
         # size of the list changes as we delete more cards
@@ -18,6 +20,7 @@ for a in range(len(bingocalls)):
             last_card=cards[b-removed].copy()
             del cards[b-removed]
             removed+=1
+
     if len(cards)==0: break
 
 # results printing

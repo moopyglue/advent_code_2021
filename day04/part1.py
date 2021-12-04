@@ -1,5 +1,8 @@
 
 import common
+import os
+
+print(os.getcwd())
 
 file="rawdata"
 bingocalls = common.load_bingo_calls(file)
