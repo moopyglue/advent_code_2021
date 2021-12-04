@@ -1,3 +1,7 @@
+# generally this code probbalyl does not make sense unless you
+# read this days problem statement, which truthefully is somewhat
+# a bag of spanners (see dogeball movie)
+
 binlen=12
 
 # function to do single column bitcount
@@ -10,6 +14,11 @@ def bitcount(lines,bit):
 # read in the data file
 with open('rawdata') as inputfile:
     lines = inputfile.readlines()
+
+# below see the use of the list(filter(lambda...
+# filter() presents a subset of an array, based on a python
+# lambda function which is wrapped in a list() to covert 
+# back to an array.
 
 # filter down the oxygen result
 filterlines=lines.copy()
