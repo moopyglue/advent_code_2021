@@ -24,18 +24,19 @@ def sum_unmarked (c,n):
     return sum
 
 def load_bingo_calls (file):
-    # read in the data file
+    # load data file into memory
     with open(file) as inputfile:
+        # read in the list of bingo balls only(first line) - list of strings
         return inputfile.readline().strip().split(",") 
 
 def load_cards (file):
-    # read in the data file
+    # load data file into memory
     with open(file) as inputfile:
         data=inputfile.readlines()
-    # allocate data read in from file
-    # into list of bingocalls and an array of arrays for cards 
+    # skip the bingo balls line and just read the cards (range starts at 1)
     cards=[]
     for x in range(1,len(data),6):
-        # join then split each 6 lines to make cards each as a single array of 25 values
+        # join then split each 6 lines to make cards each as a
+        # single array of 25 string values (same data type as bingo calls)
         cards.append(" ".join(data[x:x+6]).split() )
     return cards
