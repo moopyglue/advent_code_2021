@@ -1,18 +1,14 @@
 
 print("_"*100)
 
-# convert pattern of letters into nominal binary number
+# convert pattern of letters into nominal binary based integer.
+# code uses this to enable use fo bitwise operators for comparison
+# and also values when letters may not be ordered the same way
+# e.g. the int for abcd and dcba are the same
 def make_bin(x):
-    j=0
-    for n in x:
-        if n == "a" : j+=1
-        if n == "b" : j+=2
-        if n == "c" : j+=4
-        if n == "d" : j+=8
-        if n == "e" : j+=16
-        if n == "f" : j+=32
-        if n == "g" : j+=64
-    return j
+    result=0 ; m={ "a":1, "b":2, "c":4, "d":8, "e":16, "f":32, "g":64 }
+    for n in x: result += m[n]
+    return result
 
 # read in the list of horizontal positions
 # and calculate the minimum and maximum
