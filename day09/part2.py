@@ -22,23 +22,24 @@ floor.append([10]*(len(floorraw[0])+1))
 lowpoints=[]
 for a in range(1,len(floor[0])-1):
     for b in range(1,len(floor)-1):
-        if floor[b][a]<floor[b+1][a] and floor[b][a]<floor[b][a+1] and floor[b][a]<floor[b-1][a] and floor[b][a]<floor[b][a-1] :
+        if ( floor[b][a]<floor[b+1][a] and floor[b][a]<floor[b][a+1] and
+             floor[b][a]<floor[b-1][a] and floor[b][a]<floor[b][a-1] ) :
             lowpoints.append( [b,a,floor[b][a]] )
 
 # define a recirsie function that will count a point given,
 # set it to 10 (no longer countable), and then run itself again for 
 # 4 surrounding locations
-def lp_size(x,y):
+def size(x,y):
     if floor[x][y]>=9:
         return(0)
     floor[x][y]=10
-    return(1 + lp_size(x+1,y) + lp_size(x,y+1) + lp_size(x-1,y) + lp_size(x,y-1))
+    return(1+size(x+1,y)+size(x,y+1)+size(x-1,y)+size(x,y-1))
 
 # loop through lowpoints using above recursive finction to generate a list
 # of basin sizes (basin_sizes[])
 basin_sizes=[]  
 for l in lowpoints:
-    basin_sizes.append( lp_size(l[0],l[1]) )         
+    basin_sizes.append( size(l[0],l[1]) )         
 
 # results as per requested calculation (largest 3 basins)
 print(basin_sizes)
