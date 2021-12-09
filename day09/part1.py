@@ -22,8 +22,9 @@ floor.append([10]*(len(floorraw[0])+1))
 total=0
 for a in range(1,len(floor[0])-1):
     for b in range(1,len(floor)-1):
-        if floor[b][a]<floor[b+1][a] and floor[b][a]<floor[b][a+1] and floor[b][a]<floor[b-1][a] and floor[b][a]<floor[b][a-1] :
-            total+=floor[b][a]+1
+        if ( floor[b][a]<floor[b+1][a] and floor[b][a]<floor[b][a+1] and
+             floor[b][a]<floor[b-1][a] and floor[b][a]<floor[b][a-1] ) :
+                total+=floor[b][a]+1
                
 print(total)
     
