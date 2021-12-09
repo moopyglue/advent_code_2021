@@ -1,5 +1,5 @@
 
-print("_"*100)
+print("¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬")
 
 # read in the list of horizontal positions
 # and calculate the minimum and maximum
@@ -17,4 +17,4 @@ with open("rawdata") as inputfile:
 
 print(d)
         
-print("¬"*100)
+print("¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬")

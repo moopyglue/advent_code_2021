@@ -1,5 +1,5 @@
 
-print("_"*100)
+print("¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬")
 
 # convert pattern of letters into nominal binary based integer.
 # code uses this to enable use fo bitwise operators for comparison
@@ -57,6 +57,4 @@ with open("rawdata") as inputfile:
 
 print(d)        
         
-
-        
-print("¬"*100)
+print("¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬")
