@@ -23,7 +23,7 @@ for line in data:
               ( stack[-1] == '[' and line[n] == ']' )
         ):
             stack.pop()
-        # where an error occurs increase score as per problem
+        # where an error occurs increase score as per scheme
         else:
             if line[n] == ')': score+=3
             if line[n] == ']': score+=57
