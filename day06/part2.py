@@ -14,6 +14,8 @@ with open("rawdata") as inputfile:
     for n in inputfile.readline().strip().split(","):
         fish[int(n)]+=1
 
+print(0,fish)
+
 # update the list(fish) in a loop for 'cycledays'
 # based on the described algorythm
 for n in range(cycle_days):

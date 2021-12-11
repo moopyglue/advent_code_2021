@@ -1,0 +1,1 @@
+awk 'BEGIN{c=0}{for(i=0;i<4;i++){if(match("2347",length($NF)"")>0){c++};NF--}}END{print c}' rawdata
