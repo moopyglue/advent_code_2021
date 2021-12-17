@@ -34,9 +34,11 @@ def main():
                 x+=vx ; y+=vy
                 if vx>0 : vx-=1
                 vy-=1
-                if x>tright or y<tbottom: break
+                if x>tright or y<tbottom:
+                    break
                 if x>=tleft and y<=ttop :
                     results.add( (start_vx,start_vy) )
+                    break
     
     # restaults stored in set() to ignore duplicates
     print("velocities successful",len(results))

@@ -36,7 +36,8 @@ def main():
                 x+=vx ; y+=vy
                 if vx>0 : vx-=1
                 vy-=1
-                if x>tright or y<tbottom: break
+                if x>tright or y<tbottom:
+                    break
                 if x>=tleft and y<=ttop :
                     if result<maxheight : result=maxheight
                     break
