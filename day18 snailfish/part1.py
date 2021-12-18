@@ -25,12 +25,12 @@ def sfadd(a,b):
     while True:
         exploderes=sfexplode(num)
         if num!=exploderes:
-            print("explodres",exploderes)
+            print("explode",strdiff(num,exploderes))
             num=exploderes
         else:
             splitres=sfsplit(num)
             if num!=splitres:
-                print("splitres ",splitres)
+                print("split  ",strdiff(num,splitres))
                 num=splitres
             else:
                 break    
@@ -44,8 +44,9 @@ def sfexplode(n):
     next_int_addition=0
     while len(n)>0:
         
-        m=re.search("^\[|\]|,|[0-9]+",n).group(0)
+        m=re.search("^\[|\]|,|[0-9]+|_",n).group(0)
         #print(m," | ",stack)
+
         if m=="[":
             level+=1
             stack.append(m)
@@ -102,6 +103,22 @@ def stack_left_num_add(stack,num):
                 return stack
     return stack
                 
+def strdiff(a,b):
+    
+    c=0
+    res=["","",""]
+    while True:
+        if a[c]!=b[c]: break
+        res[0]+=a[c]
+        c+=1
+    c=1
+    while True:
+        if a[-c]!=b[-c]: break
+        res[2]=a[-c]+res[2]
+        c+=1
+    res[1]=b[len(res[0]):0-len(res[2])]    
+    return ("___".join(res))
+            
     
 header()
 main()
