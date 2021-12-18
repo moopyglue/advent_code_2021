@@ -26,6 +26,9 @@ def style_list(style,lines):
         elif style=="alphanumlist" or style=="dictpairs": # everything except alphanumerica is a seperator
             for word in re.split("[^0-9a-zA-Z]+",line):
                 l.append(word)
+        elif style=="spacesep": # everything except alphanumerica is a seperator
+            for word in re.split(" +",line):
+                l.append(word)
         elif style=="digitlist":  # compressed digit list
             for c in range(len(line)):
                 l.append(int(line[c]))
