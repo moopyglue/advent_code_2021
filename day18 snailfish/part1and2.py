@@ -30,13 +30,11 @@ def main():
     print("")
     print("largest magnitude =",max(results))
 
-
-
 #-----------------------------
 
 def sfadd(a,b):
     # add 2 sf numbers together
-    # and then reduce result
+    # and then reduce result by repeated explodes and splits
     num="["+a+","+b+"]"
     while True:
         exploderes=sfexplode(num)
@@ -51,7 +49,8 @@ def sfadd(a,b):
     return(num)
 
 def sfexplode(sfnum):
-
+    # find bracket levels above 4 and then explode first match
+    # only explodes 1 value
     cnt=0
     level=0
     while cnt<len(sfnum):
@@ -91,6 +90,7 @@ def sfexplode(sfnum):
 def sfsplit(sfnum):
     # split the first number > 9 into bracketed pair
     # that will be the first 2 digit number in the sfnum string
+    # only splits 1 value
     m=list_matches("[0-9][0-9]+",sfnum)
     if len(m)>0 :
         a=int(int(m[0]["str"])/2)
@@ -103,13 +103,13 @@ def sfsplit(sfnum):
 def list_matches(m,s):
     # returns a list of dicts
     # a list of the start, end, and matching str 
+    # this is lazy as it over processes but performance goo senough for needs
     res=[]
     for match in re.finditer(m,s):
         res.append( {"start":match.start(), "end":match.end(), "str":s[match.start():match.end()] } )
     return res
 
 def sfmagnitude(sfnum):
-
     # loop through sfnum repeatigly simplifying
     # until just a single number left
     while True:
@@ -126,8 +126,7 @@ def sfmagnitude(sfnum):
         sfnum=before+str(mag)+after
 
 def strdiff(a,b):
-    
-    # used for debugging - highlights what has chanegd in the middle of a string
+    # used for debugging - highlights what has chaneged in the middle of a string
     c=0
     res=["","",""]
     while True:
@@ -142,7 +141,6 @@ def strdiff(a,b):
     res[1]=b[len(res[0]):0-len(res[2])]    
     return ("__".join(res))
             
-    
 header()
 main()
 footer()
