@@ -50,9 +50,9 @@ def main():
             res.add( str(b[0]+a["diff"][0])+","+str(b[1]+a["diff"][1])+","+str(b[1]+a["diff"][1]) )
     print("result",len(res))
 
-    with open("results.txt","w") as f:
-        for x in res:
-            print(x,file=f)
+    with open("diffs.txt","w") as f:
+        for a in data:
+            print(a["diff"][0],a["diff"][1],a["diff"][2],file=f)
 
 
 #-----------------------------
