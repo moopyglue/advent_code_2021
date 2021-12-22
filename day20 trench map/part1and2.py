@@ -21,9 +21,6 @@ def main(inputfile):
     for a in range(len(map)):
         map[a]=tobinary(map[a])
 
-    if decoder[0]=="0" : alttype="0"
-    else: alttype="1"
-
     for n in range(loopcount):
         ttype="0"
         if int(n/2)!=(n/2):
