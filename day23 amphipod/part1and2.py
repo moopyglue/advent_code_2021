@@ -6,18 +6,24 @@ from pprint import pprint
 from shared import style_list,in_file,grep,separator,printtable
 from time import time
 
-inputfile="sample"
+inputfile="sample2"
 
-def main(inputfile):
+map=set()
 
-    data=style_list("numlist",in_file(inputfile))     
-    print(data)
+def main(data):
 
+    pprint(data)
+    
 #==============================
 
+def get_data(inputfile):
+
+    raw=in_file(inputfile)
+
+    return raw
 
 #==============================
 
 separator()
-main(inputfile)
+main(in_file(inputfile))
 separator()
