@@ -33,23 +33,22 @@ def main():
     paths={}
     paths.update(make_routes("ABCD","X",namelocs))
     paths.update(make_routes("X","ABCD",namelocs))
-    for k in [ l for l in paths if l[1][1]=="2" and l[1][0] <= 'D' ]:
-        paths.pop(k)
-    paths[('A1','A2')]=[[2,3],[3,3]]
-    paths[('B1','B2')]=[[2,5],[3,5]]
-    paths[('C1','C2')]=[[2,7],[3,7]]
-    paths[('D1','D2')]=[[2,9],[3,9]]
+    # for k in [ l for l in paths if l[1][1]=="2" and l[1][0] <= 'D' ]:
+    #     paths.pop(k)
+    # paths[('A1','A2')]=[[2,3],[3,3]]
+    # paths[('B1','B2')]=[[2,5],[3,5]]
+    # paths[('C1','C2')]=[[2,7],[3,7]]
+    # paths[('D1','D2')]=[[2,9],[3,9]]
 
     # for k in paths:
     #     print(k,paths[k])
-    traveling=style_list("alphanumlist",in_file("sample"))
-    for t in traveling:
-        t.append([])
-        t.append(0)
+    travellers={}
+    tmp=style_list("alphanumlist",in_file("sample"))
+    for t in tmp:
+        travellers[t[1]]={ "type":t[0],"cost":int(t[2]),"total":0,"path":[] }
+    # pprint(travellers)
 
-    pprint(traveling)
-
-    follow_paths(traveling,paths)
+    follow_paths(travellers,paths)
 
     exit(0)
     
@@ -61,31 +60,34 @@ def follow_paths(travellers,paths):
 
     global ooo
     ooo+=1
-                
+    
+    # print("")
     aps=avail_paths(travellers,paths)
     # pprint(aps)
+    pprint(travellers)
 
-    if ooo>66:
+    if ooo>16:
         return
 
     for ap in range(len(aps)):
-        for t in range(len(travellers)):
-            if aps[ap][1]==travellers[t][1]:
-                already_visited=False
-                for p in travellers[t][3]:
-                    if p==aps[ap][2]:
-                        already_visited=True
-                        break
-                if not already_visited:
-                    j=travellers.copy()
-                    j[t][3].append(j[t][1])
-                    j[t][1]=aps[ap][2]
-                    j[t][4]+=aps[ap][3]
-                    follow_paths(j,paths)
-                break
+        for loc in [ l for l in travellers if l==aps[ap][1] ]:
+            already_visited=False
+            for p in travellers[loc]["path"]:
+                if p==aps[ap][2]:
+                    already_visited=True
+                    break
+            if not already_visited:
+                print("\n","chosen",aps[ap])
+                j=travellers.copy()
+                j[loc]["path"].append(loc)
+                j[loc]["total"]+=aps[ap][3]
+                j[aps[ap][2]]=j[loc].copy()
+                j.pop(loc)
+                follow_paths(j,paths)
+            break
 
     ooo-=1
-    pprint(travellers)
+    # pprint(travellers)
     return
 
 
@@ -93,17 +95,20 @@ def avail_paths(travellers,paths):
 
     endpaths=[]
 
+    # define non-empty locations as 'occupied'
     occupied=set()
-    for t in travellers:
-        for p in paths:
-            if t[1]==p[0]:
-                occupied.add( (paths[p][0][0],paths[p][0][1]))
+    for loc in travellers:
+        for p in [ x for x in paths if x[0]==loc ]:
+            occupied.add( (paths[p][0][0],paths[p][0][1]))
 
-    for t in travellers:
-        loc=t[1]
+    for loc in travellers:
+        if loc==travellers[loc]["type"]+"2":
+            continue
+        if loc==travellers[loc]["type"]+"1" and loc[0]+"2" in travellers and travellers[loc[0]+"2"]["type"]==loc[0]:
+            continue
         for p in paths:
             if p[0]!=loc: continue                       # skip routes not starting at my location
-            if p[0][0]=="X" and p[1][0]!=t[0]: continue  # 'A's must end up in 'A'
+            if p[0][0]=="X" and p[1][0]!=travellers[loc]["type"]: continue  # 'A's must end up in 'A'
             # weed out paths with obsructions
             cnt=0
             for k in paths[p]:
@@ -112,7 +117,7 @@ def avail_paths(travellers,paths):
             if cnt>1:
                 continue
             # weed out paths which have completed
-            endpaths.append( [ t[0], p[0], p[1], (int(len(paths[p])-1)*int(t[2])) ] )
+            endpaths.append( [ travellers[loc]["type"], p[0], p[1], (len(paths[p])-1)*travellers[loc]["cost"] ] )
     
     # remove any [ABCD]1 routes when [ABCD]2 routes are available
     for k in ["A","B","C","D"]:
