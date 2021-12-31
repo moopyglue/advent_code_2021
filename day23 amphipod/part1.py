@@ -43,7 +43,7 @@ def main():
     # for k in paths:
     #     print(k,paths[k])
     travellers={}
-    tmp=style_list("alphanumlist",in_file("sample"))
+    tmp=style_list("alphanumlist",in_file("rawdata"))
     for t in tmp:
         travellers[t[1]]={ "type":t[0],"cost":int(t[2]),"total":0,"path":[] }
     # pprint(travellers)
@@ -55,22 +55,41 @@ def main():
 #==============================
 
 ooo=0
+minval=999999999
+callcount=0
 
 def follow_paths(travellers,paths):
 
-    global ooo
+    global ooo,minval,callcount
     ooo+=1
+    callcount+=1
     
     # print("")
     aps=avail_paths(travellers,paths)
-    # pprint(aps)
-    pprint(travellers)
-
-    if ooo>16:
+    # print("travellers")
+    # pprint(travellers)
+    if len(aps)==0:
+        tot=0
+        xcount=0
+        for t in travellers:
+            if t[0]=="X": xcount+=1
+            tot+=travellers[t]["total"]
+        # pprint(travellers)
+        if xcount==0 and tot<minval:
+            minval=tot
+            print("total =",tot)
+            print("ooo",ooo)
+            print("callcount",callcount)
+            pprint(travellers)
+        ooo-=1
         return
 
-    print("\n")
-    printtable(aps)
+    if ooo>50:
+        ooo-=1
+        return
+
+    # print("avilable paths...")
+    # printtable(aps)
     for ap in range(len(aps)):
         for loc in [ l for l in travellers if l==aps[ap][1] ]:
             already_visited=False
@@ -79,14 +98,16 @@ def follow_paths(travellers,paths):
                     already_visited=True
                     break
             if not already_visited:
-                print("")
-                print("chosen",aps[ap])
-                j=travellers.copy()
-                j[loc]["path"].append(loc)
-                j[loc]["total"]+=aps[ap][3]
-                j[aps[ap][2]]=j[loc].copy()
-                j.pop(loc)
-                follow_paths(j,paths)
+                # print("chosen",aps[ap])
+                j2=travellers[loc].copy()
+                j2["path"]=travellers[loc]["path"].copy()
+                j2["path"].append(loc)
+                j2["total"]+=aps[ap][3]
+                travellers[aps[ap][2]]=j2
+                j3=travellers.pop(loc)
+                follow_paths(travellers,paths)
+                travellers.pop(aps[ap][2])
+                travellers[loc]=j3
             break
 
     ooo-=1
@@ -135,8 +156,7 @@ def avail_paths(travellers,paths):
             endpaths=endpaths[0:j1]+endpaths[j1+1:]
     
     # for x in range(len(endpaths)):
-    #     if l[2]==['A1','B1','C1','D1'] ]:
-
+    #     if l[2]==['A1','B1','C1','D1'] ]
 
 
     return endpaths
