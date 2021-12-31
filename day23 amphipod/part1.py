@@ -69,6 +69,8 @@ def follow_paths(travellers,paths):
     if ooo>16:
         return
 
+    print("\n")
+    printtable(aps)
     for ap in range(len(aps)):
         for loc in [ l for l in travellers if l==aps[ap][1] ]:
             already_visited=False
@@ -77,7 +79,8 @@ def follow_paths(travellers,paths):
                     already_visited=True
                     break
             if not already_visited:
-                print("\n","chosen",aps[ap])
+                print("")
+                print("chosen",aps[ap])
                 j=travellers.copy()
                 j[loc]["path"].append(loc)
                 j[loc]["total"]+=aps[ap][3]
@@ -102,10 +105,13 @@ def avail_paths(travellers,paths):
             occupied.add( (paths[p][0][0],paths[p][0][1]))
 
     for loc in travellers:
-        if loc==travellers[loc]["type"]+"2":
-            continue
-        if loc==travellers[loc]["type"]+"1" and loc[0]+"2" in travellers and travellers[loc[0]+"2"]["type"]==loc[0]:
-            continue
+        if loc[0] in ['A','B','C','D']:
+            if loc==travellers[loc]["type"]+"2":
+                continue
+            if loc==travellers[loc]["type"]+"1":
+                if loc[0]+"2" in travellers:
+                    if travellers[loc[0]+"2"]["type"]==loc[0]:
+                        continue
         for p in paths:
             if p[0]!=loc: continue                       # skip routes not starting at my location
             if p[0][0]=="X" and p[1][0]!=travellers[loc]["type"]: continue  # 'A's must end up in 'A'
@@ -123,11 +129,16 @@ def avail_paths(travellers,paths):
     for k in ["A","B","C","D"]:
         j1=-1 ; j2=-1
         for l in range(len(endpaths)):
-            if endpaths[l][2]==k+"1": j=l
-            if endpaths[l][2]==k+"2": j=l
+            if endpaths[l][2]==k+"1": j1=l
+            if endpaths[l][2]==k+"2": j2=l
         if j2>=0:
             endpaths=endpaths[0:j1]+endpaths[j1+1:]
-            
+    
+    # for x in range(len(endpaths)):
+    #     if l[2]==['A1','B1','C1','D1'] ]:
+
+
+
     return endpaths
         
 def make_routes(start,finish,names):
