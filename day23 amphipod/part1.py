@@ -61,8 +61,13 @@ callcount=0
 def follow_paths(travellers,paths):
 
     global ooo,minval,callcount
-    ooo+=1
     callcount+=1
+
+    tot=0
+    for t in travellers:
+        tot+=travellers[t]["total"]
+    if tot>=minval:
+        return
     
     # print("")
     aps=avail_paths(travellers,paths)
@@ -72,25 +77,34 @@ def follow_paths(travellers,paths):
         tot=0
         xcount=0
         for t in travellers:
-            if t[0]=="X": xcount+=1
+            if t[0]!=travellers[t]["type"]: xcount+=1
             tot+=travellers[t]["total"]
         # pprint(travellers)
         if xcount==0 and tot<minval:
             minval=tot
+            print("")
             print("total =",tot)
             print("ooo",ooo)
             print("callcount",callcount)
             pprint(travellers)
-        ooo-=1
         return
+
+    ooo+=1
 
     if ooo>50:
         ooo-=1
         return
 
+    # if callcount>50000:
+    #     print("")
+    #     for t in travellers: print(t,travellers[t])
+    #     for p in aps: print(p)
+
     # print("avilable paths...")
     # printtable(aps)
     for ap in range(len(aps)):
+        if ooo<=1:
+            print("ooo",ooo,"main loop",aps[ap])
         for loc in [ l for l in travellers if l==aps[ap][1] ]:
             already_visited=False
             for p in travellers[loc]["path"]:
@@ -134,6 +148,7 @@ def avail_paths(travellers,paths):
                     if travellers[loc[0]+"2"]["type"]==loc[0]:
                         continue
         for p in paths:
+            if len(travellers[loc]["path"])>=2: continue
             if p[0]!=loc: continue                       # skip routes not starting at my location
             if p[0][0]=="X" and p[1][0]!=travellers[loc]["type"]: continue  # 'A's must end up in 'A'
             # weed out paths with obsructions
